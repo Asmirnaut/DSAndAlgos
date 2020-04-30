@@ -178,4 +178,19 @@ class DoublyLinkedList {
   //update the next and prev properties to remove the found node from the list
   //set next and prev to null on the found node
   //decrement the length and return the removed node
+
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+    let removedNode = this.get(index);
+    let prevNode = removedNode.prev;
+    let nextNode = removedNode.next;
+    prevNode.next = nextNode;
+    nextNode.prev = prevNode;
+    removedNode.next = null;
+    removedNode.prev = null;
+    this.length--;
+    return removedNode;
+  }
 }
