@@ -24,4 +24,33 @@ class Graph {
     this.adjacencyList[ver1].push(ver2);
     this.adjacencyList[ver2].push(ver1);
   }
+
+  // Removing an Edge
+  //Accepts two vertices, ver1 and ver2
+  //reassign the key of ver1 to be an array that does not contain vertex 2
+  //do the same for ver2
+
+  removeEdge(ver1, ver2) {
+    this.adjacencyList[ver1] = this.adjacencyList[ver1].filter(
+      (v) => v !== ver2
+    );
+    this.adjacencyList[ver2] = this.adjacencyList[ver2].filter(
+      (v) => v !== ver1
+    );
+  }
+
+  //Remove Vertex
+  //Accepts a single argument, a vertex
+  //Should loop as long as there are any other vertices in the adjaceny list for that vertex
+  //Inside the loop, call our removeEdge function with the vertex we are removing and any values in the adjacency list for that vertex
+  //delete the key in the adjacency list for that vertex
+
+  removeVertex(ver) {
+    if (this.adjacencyList[ver].length) {
+      for (let i = 0; i < this.adjacencyList[ver].length; i++) {
+        this.removeEdge(ver, i);
+      }
+    }
+    delete this.adjacencyList[ver];
+  }
 }
