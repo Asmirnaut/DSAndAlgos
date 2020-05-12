@@ -47,10 +47,44 @@ class Graph {
 
   removeVertex(ver) {
     if (this.adjacencyList[ver].length) {
-      for (let i = 0; i < this.adjacencyList[ver].length; i++) {
-        this.removeEdge(ver, i);
+      while (this.adjacencyList[ver].length) {
+        let adjVer = this.adjacencyList[ver].pop();
+        this.removeEdge(ver, adjVer);
       }
     }
     delete this.adjacencyList[ver];
+  }
+
+  //Traversing a graph
+  //Unlike a tree, which is a special kind of graph, most graphs do not have a root node
+
+  //Depth First Search : Explore as far down as possible before backtracking
+  //Recursive DFS
+  //Accepts Starting node
+  //Create a list to store the end result, to be returned at the very end
+  //Create an object to store visited vertices
+  //Create a helper function which accepts a vertex
+  //The helper function should return early if the vertex is empty
+  //it should place the vertex it accepts into the visted object and push that vertex into the results array
+  //Loop over all of the values in the adjacencyList for that vertex
+  //If any of htose values have not been visited, recursively invoke the helper funciton with that vertex
+
+  DFSRecursive(vertex) {
+    const result = [];
+    const visited = {};
+    const adjacencyList = this.adjacencyList;
+
+    const traverse = (ver) => {
+      if (!ver) return null;
+      visited[ver] = true;
+      result.push(ver);
+      adjacencyList[ver].forEach((neighbor) => {
+        if (!visited[neighbor]) {
+          return traverse(neighbor);
+        }
+      });
+    };
+    traverse(vertex);
+    return result;
   }
 }
