@@ -87,4 +87,71 @@ class Graph {
     traverse(vertex);
     return result;
   }
+
+  //DFS Iterative
+  // Function accepts starting node
+  //Create a stack to help us keep track of vertices (array)
+  //create an array to store the end result to be returned
+  //create an object to store visted vertices
+  //add the starting vertex to the stack and mark it visited
+  //While the stack has something in it:
+  //Pop the next vertex from the stack
+  //If that vertex hasn't been visited yet
+  //Mark it as visited
+  //Add to the result list
+  //push all of its neighbors into the stack
+
+  DFSIterative(vertex) {
+    let stack = [];
+    let result = [];
+    let visited = {};
+
+    stack.push(vertex);
+    visited[vertex] = true;
+
+    while (stack.length) {
+      let ver = stack.pop();
+      result.push(ver);
+      this.adjacencyList[ver].forEach((v) => {
+        if (!visited[v]) {
+          visited[v] = true;
+          stack.push(v);
+        }
+      });
+    }
+    return result;
+  }
+
+  //Breadth First Search
+  // Accepts a starting vertex
+  //create a queue(array) and place the starting vertex in it
+  //Create an array to store the results array
+  // create an object to store the nodes visited
+  //Mark the starting vertex as visited
+  //Loop as long as there is anything in the queue
+  //Remove the first vertex from the queue and push it into the array that stores the results
+  //Loop over each vertex in the adjacency list for the vertex you are visiting
+  //If it is not inside the object that stores the nodes visited, mark it as visisted and enqueue that vertex
+  //once you have finished looping, return the results array
+
+  BFS(vertex) {
+    const queue = [vertex];
+    const result = [];
+    const visited = {};
+
+    visited[vertex] = true;
+
+    while (queue.length) {
+      let curVer = queue.shift();
+      result.push(curVer);
+
+      this.adjacencyList[curVer].forEach((neighbor) => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          queue.push(neighbor);
+        }
+      });
+    }
+    return result;
+  }
 }
